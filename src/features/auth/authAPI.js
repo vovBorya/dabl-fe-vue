@@ -7,7 +7,7 @@ const signIn = async (login, password) => {
         body: JSON.stringify({ login, password }),
         headers: { 'Content-Type': 'application/json' },
         method: 'POST'
-    });
+    }).then(res => res.json());
 }
 
 export default {
