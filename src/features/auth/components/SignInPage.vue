@@ -1,7 +1,7 @@
 <template>
   <FormContainer title="Sign in">
     <InputText placeholder="Login" v-model="login"/>
-    <Password placeholder="Password" toggleMask v-model="password" :feedback="true" />
+    <Password placeholder="Password" toggleMask v-model="password" />
 
     <Button label="Sign in" raised size="small" @click="onSignInClick" />
 
@@ -16,11 +16,14 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Password from 'primevue/password';
 
-import {ACCESS_TOKEN_LOCAL_STORAGE_NAME} from "../../app";
+import {ACCESS_TOKEN_LOCAL_STORAGE_NAME, SET_IS_AUTHENTICATED} from "../../app";
 import {routes} from "../../routing";
+import {SET_PROFILE_DATA} from "../../profile";
 import authAPI from "../authAPI";
 import FormContainer from "./FormContainer";
+import {useStore} from "vuex";
 
+const store = useStore();
 const router = useRouter();
 
 const login = ref('')
@@ -37,7 +40,8 @@ const onSignInClick = async () => {
       return;
     }
 
-    console.log({account})
+    store.commit(SET_PROFILE_DATA, account)
+    store.commit(SET_IS_AUTHENTICATED, true)
     // save account to store
 
     localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_NAME, accessToken);

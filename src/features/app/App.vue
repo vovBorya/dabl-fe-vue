@@ -3,8 +3,25 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import "primevue/resources/themes/lara-dark-indigo/theme.css";
+import {ACCESS_TOKEN_LOCAL_STORAGE_NAME} from "@/features/app/constants";
+import {profileAPI, SET_PROFILE_DATA} from "@/features/profile";
+import {useStore} from "vuex";
 
+const store = useStore();
+
+onMounted(async () => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_NAME);
+
+  if (accessToken) {
+    const profile = await profileAPI.fetchProfile();
+
+    console.log({profile})
+
+    store.commit(SET_PROFILE_DATA, profile);
+  }
+})
 </script>
 
 <style>

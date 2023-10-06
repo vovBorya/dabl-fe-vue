@@ -6,6 +6,7 @@ import {ACCESS_TOKEN_LOCAL_STORAGE_NAME, App} from '@/features/app';
 import {SignInPage, SignUpPage} from "@/features/auth";
 import {routes} from "@/features/routing";
 import {ChatsPage} from "@/features/chats";
+import {store} from "@/features/store";
 
 
 const app = createApp(App);
@@ -34,6 +35,8 @@ const router = createRouter({
 app.use(router);
 
 app.use(PrimeVue);
+
+app.use(store);
 
 app.mount('#app')
 
